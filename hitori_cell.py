@@ -2,7 +2,7 @@ from enum import Enum
 
 
 class CellState(Enum):
-    UNKNOWN = 0
+    GREY = 0
     WHITE = 1
     BLACK = 2
 
@@ -12,4 +12,4 @@ class HitoriCell:
         self.x = x
         self.y = y
         self.value = value
-        self.state = CellState.UNKNOWN
+        self.state = CellState.GREY

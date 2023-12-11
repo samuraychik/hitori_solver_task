@@ -1,4 +1,4 @@
-from hitory_cell import CellState, HitoriCell
+from hitori_cell import CellState, HitoriCell
 import numpy as np
 
 
@@ -25,7 +25,7 @@ class HitoriBoard:
 
     def get_col(self, number):
         return np.transpose(self._board)[number]
-
+    
     def get_adjacent(self, x, y):
         dx = [-1, 1]
         dy = [-1, 1]
@@ -36,5 +36,15 @@ class HitoriBoard:
                     adjacent.append(self._board[x + deltaX, y + deltaY])
         return adjacent
 
+    def get_repeats(self, x, y):
+        pass
+
     def сheck_сonnectivity(self):
         pass
+
+    # Перегрузки для более удобного вызова из других частей проекта
+    def get_adjacent_from_cell(self, cell: HitoriCell):
+        return self.get_adjacent(cell.x, cell.y)
+
+    def get_repeats_from_cell(self, cell: HitoriCell):
+        return self.get_repeats(cell.x, cell.y)
