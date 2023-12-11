@@ -1,4 +1,10 @@
 from enum import Enum
+from hitori_commands import Command, CommandManager
+
+
+class SetBlack(Command):
+    def __init__(self) -> None:
+        super().__init__()
 
 
 class CellState(Enum):
