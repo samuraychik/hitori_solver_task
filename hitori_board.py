@@ -7,18 +7,19 @@ class HitoriBoard:
         if len(numbers) != width * height:
             raise
 
-        self._cells = []
         self.width = width
         self.height = height
+        
+        cells = []
 
         i = 0
         for y in range(height):
             for x in range(width):
                 if i < len(numbers):
-                    self.cells.append(HitoriCell(x, y, numbers[i]))
+                    cells.append(HitoriCell(x, y, numbers[i]))
                     i += 1
 
-        self._board = np.array(self.cells).reshape(height, width)
+        self._board = np.array(cells).reshape(height, width)
 
     def get_row(self, number):
         return self._board[number]
