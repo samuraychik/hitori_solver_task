@@ -14,13 +14,15 @@ class HitoriPatterns:
                     if neighbour.value == self._board.get_cell(x, y).value:
                         col = self._board.get_col(neighbour.x)
                         for cell in col:
-                            if cell != neighbour and cell != self._board.get_cell(x, y) and cell.value == neighbour.value:
+                            if not adjacent.__contains__(cell) and cell != self._board.get_cell(x, y) \
+                                    and cell.value == neighbour.value:
                                 SetBlack(cell, self._board).do()
                 for neighbour in [cell for cell in adjacent if cell.x == x]:
                     if neighbour.value == self._board.get_cell(x, y).value:
                         row = self._board.get_row(neighbour.y)
                         for cell in row:
-                            if cell != neighbour and cell != self._board.get_cell(x, y) and cell.value == neighbour.value:
+                            if not adjacent.__contains__(cell) and cell != self._board.get_cell(x, y) \
+                                    and cell.value == neighbour.value:
                                 SetBlack(cell, self._board).do()
 
     def solve_triple_corner(self):
