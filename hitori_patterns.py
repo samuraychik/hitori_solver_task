@@ -7,8 +7,8 @@ class HitoriPatterns:
         self._board = board
 
     def solve_repeats(self):  # Если две соседние ячейки имеют одинаковый номер баним повторюшки
-        for y in range(self._board.height):
-            for x in range(self._board.width):
+        for y in range(self._board.side):
+            for x in range(self._board.side):
                 adjacent = self._board.get_adjacent_from_cell(self._board.get_cell(x, y))
                 for neighbour in [cell for cell in adjacent if cell.y == y]:
                     if neighbour.value == self._board.get_cell(x, y).value:
@@ -39,18 +39,18 @@ class HitoriPatterns:
                     SetBlack(corner_cells[1][i], self._board)
 
     def solve_sandwich(self):
-        for y in range(self._board.height):  # не забыть обработать граничные случаи
-            for x in range(self._board.width):
+        for y in range(self._board.side):  # не забыть обработать граничные случаи
+            for x in range(self._board.side):
                 cell = self._board.get_cell(x, y)
                 adjacent = self._board.get_adjacent_from_cell(cell)
-                if 0 < x < self._board.width - 1:
+                if 0 < x < self._board.side - 1:
                     row_neighbours = [cell for cell in adjacent if cell.x == x]
                     if row_neighbours[0].value == row_neighbours[1].value:
                         SetWhite(cell, self._board)
                         if cell.value == row_neighbours[0].value:
                             SetBlack(row_neighbours[0], self._board)
                             SetBlack(row_neighbours[1], self._board)
-                if 0 < y < self._board.height - 1:
+                if 0 < y < self._board.side - 1:
                     col_neighbours = [cell for cell in adjacent if cell.y == y]
                     if col_neighbours[0].value == col_neighbours[1].value:
                         SetWhite(cell, self._board)

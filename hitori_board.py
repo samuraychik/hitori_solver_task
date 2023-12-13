@@ -4,32 +4,32 @@ from collections import deque
 
 
 class HitoriBoard:
-    def __init__(self, width, height, numbers) -> None:
-        if len(numbers) != width * height:
-            raise
+    def __init__(self, side, numbers) -> None:
+        if len(numbers) != side * side:
+            raise Exception("Init HitoryBoard: Incorrect input")
 
-        self.width = width
-        self.height = height
+        self.side = side
         
         cells = []
 
         i = 0
-        for y in range(height):
-            for x in range(width):
+        for y in range(side):
+            for x in range(side):
                 if i < len(numbers):
                     cells.append(HitoriCell(x, y, numbers[i]))
                     i += 1
 
-        self._board = np.array(cells).reshape(height, width)
+        self._board = np.array(cells).reshape(side, side)
 
     def get_row(self, number):
         return self._board[number]
 
     def get_col(self, number):
-        return np.transpose(self._board)[number]
+        return self._board[:, number]
 
+    # Рекомендую использовать эту функцию вмето прямого обращения к клетке доски self._board[y, x]
     def get_cell(self, x, y):
-        return self._board[x, y]
+        return self._board[y, x]
     
     def get_adjacent(self, x, y):
         dx = [-1, 1]
@@ -37,13 +37,13 @@ class HitoriBoard:
         adjacent = []
         for deltaX in dx:
             for deltaY in dy:
-                if 0 < x + deltaX < self.width and 0 < y + deltaY < self.height:
-                    adjacent.append(self._board[x + deltaX, y + deltaY])
+                if 0 < x + deltaX < self.side and 0 < y + deltaY < self.side:
+                    adjacent.append(self.get_cell(x + deltaX, y + deltaY))
         return adjacent
 
     def get_col_repeats(self, x, y):
         col = self.get_col(x)
-        origin_cell = self._board[y][x]
+        origin_cell = self.get_cell(x, y)
         repeats = []
         for cell in col:
             if cell.value == origin_cell.value and cell.y != origin_cell.y:
@@ -52,7 +52,7 @@ class HitoriBoard:
 
     def get_row_repeats(self, x, y):
         row = self.get_row(y)
-        origin_cell = self._board[y][x]
+        origin_cell = self.get_cell(x, y)
         repeats = []
         for cell in row:
             if cell.value == origin_cell.value and cell.x != origin_cell.x:
@@ -64,11 +64,12 @@ class HitoriBoard:
         row_repeats = self.get_row_repeats(x, y)
         return col_repeats + row_repeats
 
-    def сheck_сonnectivity(self):
-        for y in range(self.height):
-            for x in range(self.width):
-                if self._board[x][y].state == CellState.WHITE:
-                    start_cell = self._board[x][y]
+    def check_connectivity(self):
+        start_cell = HitoriCell(0, 0, 0)
+        for y in range(self.side):
+            for x in range(self.side):
+                if self.get_cell(x, y).state == CellState.WHITE:
+                    start_cell = self.get_cell(x, y)
                     break
             break
 
@@ -81,15 +82,15 @@ class HitoriBoard:
                     visited.add(neighbour)
                     queue.append(neighbour)
 
-        return len(visited) == len(self.get_white_cells())
+        return len(visited) == len(self.get_cells_of_color(CellState.WHITE) + self.get_cells_of_color(CellState.GREY))
 
-    def get_white_cells(self):  # Тут и белые, и псевдобелые
-        white_cells = []
-        for y in range(self.height):
-            for x in range(self.width):
-                if self._board[x][y].state != CellState.BLACK:
-                    white_cells.append(self._board[x][y])
-        return white_cells
+    def get_cells_of_color(self, color: CellState):
+        cells = []
+        for y in range(self.side):
+            for x in range(self.side):
+                if self.get_cell(x, y).state == color:
+                    cells.append(self.get_cell(x, y))
+        return cells
 
     # Перегрузки для более удобного вызова из других частей проекта
     def get_adjacent_from_cell(self, cell: HitoriCell):
