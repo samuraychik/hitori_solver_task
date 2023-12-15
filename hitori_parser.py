@@ -2,11 +2,11 @@ from hitori_board import HitoriBoard
 
 
 class HitoriParser:
-    def parse_board_from_file(filename: str) -> HitoriBoard:
+    def parse_board_from_file(self, filename: str) -> HitoriBoard:
         with open(filename) as f:
-            width, height = map(int, f.readline().strip().split())
+            size = int(f.readline().strip())
             numbers = []
-            for _ in range(height):
+            for _ in range(size):
                 row = map(int, f.readline().strip().split())
                 numbers.extend(row)
-            return HitoriBoard(width, height, numbers)
+            return HitoriBoard(size, numbers)

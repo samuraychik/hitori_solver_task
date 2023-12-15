@@ -1,6 +1,3 @@
-from sys import stdout
-
-
 class Command:
     def do(self):
         raise NotImplementedError()
@@ -18,9 +15,9 @@ class CommandManager:
         self.trash = list()
 
     def do(self, command: Command) -> None:
-        command.do()
         self.history.append(command)
         self.trash = list()
+        command.do()
 
     def undo(self) -> None:
         try:
@@ -28,7 +25,7 @@ class CommandManager:
             command.undo()
             self.trash.append(command)
         except IndexError:
-            stdout.write("<ERROR> History is empty")
+            print("<ERROR> History is empty")
 
     def redo(self) -> None:
         try:
@@ -36,4 +33,4 @@ class CommandManager:
             command.do()
             self.history.append(command)
         except IndexError:
-            stdout.write("<ERROR> Trash is empty")
+            print("<ERROR> Trash is empty")

@@ -3,6 +3,10 @@ from hitori_board import HitoriBoard
 from hitori_cell import HitoriCell, CellState
 
 
+class HitoriWrongSolutionError(Exception):
+    pass
+
+
 class SetWhite(Command):
     def __init__(self, cell: HitoriCell, board: HitoriBoard) -> None:
         self.cell = cell
@@ -13,17 +17,17 @@ class SetWhite(Command):
         if self.cell.state == CellState.WHITE:
             return
         if self.cell.state == CellState.BLACK:
-            # TO-DO (trigger error)
-            raise Exception("SetWhite: wrong solution")
-            
+            raise HitoriWrongSolutionError()
+
         self.cell.state = CellState.WHITE
+        
         repeats = self.board.get_repeats_from_cell(self.cell)
         for repeat in repeats:
             if repeat.state != CellState.BLACK:
                 self.manager.do(SetBlack(repeat, self.board))
 
     def undo(self):
-        self.cell.state == CellState.GREY
+        self.cell.state = CellState.GREY
         while len(self.manager.history) > 0:
             self.manager.undo()
 
@@ -38,16 +42,19 @@ class SetBlack(Command):
         if self.cell.state == CellState.BLACK:
             return
         if self.cell.state == CellState.WHITE:
-            # TO-DO (trigger error)
-            raise Exception("SetBlack: wrong solution")
-        
+            raise HitoriWrongSolutionError()
+
         self.cell.state = CellState.BLACK
+        
+        if not self.board.check_connectivity():
+            raise HitoriWrongSolutionError()
+        
         adjacents = self.board.get_adjacent_from_cell(self.cell)
         for adjacent in adjacents:
             if adjacent.state != CellState.WHITE:
                 self.manager.do(SetWhite(adjacent, self.board))
 
     def undo(self):
-        self.cell.state == CellState.GREY
+        self.cell.state = CellState.GREY
         while len(self.manager.history) > 0:
             self.manager.undo()
