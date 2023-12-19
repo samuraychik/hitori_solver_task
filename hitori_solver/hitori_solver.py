@@ -35,8 +35,8 @@ class HitoriSolutionFoundError(Exception):
     pass
 
 
-class HitoriSolver:     
-    def solve(self, board: HitoriBoard):       
+class HitoriSolver:
+    def solve(self, board: HitoriBoard):
         if self.is_solved(board):
             self.wrap_solution(board)
             return
@@ -95,7 +95,7 @@ class HitoriSolver:
             if self.is_solved(board):
                 raise HitoriSolutionFoundError()
 
-    def resolve_non_repeats(self, board: HitoriBoard, 
+    def resolve_non_repeats(self, board: HitoriBoard,
                             manager: CommandManager):
         grey_repeats = board.get_all_grey_repeats()
         grey_cells = board.get_cells_of_color(CellState.GREY)
@@ -106,7 +106,7 @@ class HitoriSolver:
         for cell in grey_non_repeats:
             manager.do(SetWhite(cell, board))
 
-    def resolve_surface_cells(self, board: HitoriBoard, 
+    def resolve_surface_cells(self, board: HitoriBoard,
                               manager: CommandManager):
         found_surface_cells = False
         for cell in board.get_cells_list():
@@ -141,7 +141,7 @@ class HitoriSolver:
         if not found_surface_cells:
             raise HitoriNoSurfaceCellsError()
 
-    def iterate_remaining(self, board: HitoriBoard, 
+    def iterate_remaining(self, board: HitoriBoard,
                           manager: CommandManager):
         for cell in board.get_cells_list():
             if cell.state != CellState.GREY:

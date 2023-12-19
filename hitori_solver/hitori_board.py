@@ -99,7 +99,7 @@ class HitoriBoard:
                     queue.append(adj)
 
         non_blacks = []
-        non_blacks += self.get_cells_of_color(CellState.WHITE) 
+        non_blacks += self.get_cells_of_color(CellState.WHITE)
         non_blacks += self.get_cells_of_color(CellState.GREY)
         return len(visited) == len(non_blacks)
 

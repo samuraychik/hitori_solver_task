@@ -8,7 +8,7 @@ argparser = argparse.ArgumentParser(
     description="Solves your Hitori puzzle for you!")
 
 argparser.add_argument("filename", metavar="PATH", type=str,
-                    help="path to your Hitori puzzle, in .txt format")
+                       help="path to your Hitori puzzle, in .txt format")
 
 
 def log_error(message):
@@ -17,7 +17,7 @@ def log_error(message):
 
 def main():
     args = argparser.parse_args()
-    
+
     parser = hitori_parser.HitoriParser()
     try:
         board = parser.parse_board_from_file(args.filename)

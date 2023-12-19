@@ -15,22 +15,22 @@ class HitoriPatternsResolver:
                     col = self.board.get_col(neighbour.x)
                     for col_cell in col:
                         if col_cell not in adjacent and col_cell != cell \
-                            and col_cell.value == neighbour.value:
-                                SetBlack(col_cell, self.board).do()
+                                and col_cell.value == neighbour.value:
+                            SetBlack(col_cell, self.board).do()
 
             for neighbour in [c for c in adjacent if c.y == cell.y]:
                 if neighbour.value == cell.value:
                     row = self.board.get_row(neighbour.y)
                     for row_cell in row:
                         if row_cell not in adjacent and row_cell != cell \
-                            and row_cell.value == neighbour.value:
-                                SetBlack(row_cell, self.board).do()
+                                and row_cell.value == neighbour.value:
+                            SetBlack(row_cell, self.board).do()
 
     def resolve_triple_corners(self):
         corner_cells = [
-            [self.board.get_cell(0, 0), self.board.get_cell(-1, 0), 
+            [self.board.get_cell(0, 0), self.board.get_cell(-1, 0),
              self.board.get_cell(0, -1), self.board.get_cell(-1, -1)],
-            [self.board.get_cell(1, 1), self.board.get_cell(-2, 1), 
+            [self.board.get_cell(1, 1), self.board.get_cell(-2, 1),
              self.board.get_cell(1, -2), self.board.get_cell(-2, -2)]
         ]
         for i in range(4):
