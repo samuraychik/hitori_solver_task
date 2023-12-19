@@ -40,7 +40,7 @@ class HitoriBoardTestCase(unittest.TestCase):
 
     def test_get_adjacent(self):
         self.board = hb.HitoriBoard(3, 3, [1, 2, 3, 4, 5, 6, 7, 8, 9])
-        expected = [self.board._board[1, 0], self.board._board[0, 1], 
+        expected = [self.board._board[1, 0], self.board._board[0, 1],
                     self.board._board[1, 2], self.board._board[2, 1]]
         self.assertCountEqual(self.board.get_adjacent(1, 1), expected)
         self.assertCountEqual(self.board.get_adjacent_from_cell(

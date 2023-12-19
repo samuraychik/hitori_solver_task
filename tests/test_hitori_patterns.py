@@ -24,7 +24,7 @@ class HitoriBoardTestCase(unittest.TestCase):
         self.pr = hp.HitoriPatternsResolver(board)
         self.pr.resolve_repeats()
         expected = "? \n? \n? \n. \n# \n"
-        self.assertEqual(board.to_string_with_symbols(), expected)        
+        self.assertEqual(board.to_string_with_symbols(), expected)
 
     def test_resolve_corners(self):
         board = hp.HitoriBoard(3, 3, [2, 2, 1, 2, 1, 3, 1, 3, 2])

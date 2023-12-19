@@ -16,7 +16,7 @@ class HitoriSolverTestCase(unittest.TestCase):
         del self.solver
 
     def test_resolve_patterns(self):
-        board = hs.HitoriBoard(5, 5, 
+        board = hs.HitoriBoard(5, 5,
                                [4, 2, 4, 1, 5,
                                 2, 3, 1, 2, 4,
                                 5, 4, 3, 2, 4,
