@@ -14,13 +14,14 @@ class HitoriCell:
         self.value = value
         self.state = CellState.GREY
 
+    def color(self) -> str:
+        return ["G", "W", "B"][self.state.value]
+
+    def symbol(self) -> str:
+        return ["?", ".", "#"][self.state.value]
+
     def __str__(self) -> str:
-        if self.state == CellState.BLACK:
-            return "#"
-        if self.state == CellState.WHITE:
-            return "."
-        if self.state == CellState.GREY:
-            return "?"
+        return f"({self.x},{self.y} : {self.value}{self.color()})"
 
     def __repr__(self) -> str:
         return self.__str__()

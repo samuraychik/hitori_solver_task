@@ -1,8 +1,7 @@
 import argparse
 
-from hitori_board import HitoriBoard
-from hitori_parser import HitoriParser
-from hitori_solver import HitoriSolver, HitoriNoSolutionError
+from hitori_solver import hitori_parser
+from hitori_solver import hitori_solver
 
 
 argparser = argparse.ArgumentParser(
@@ -13,25 +12,25 @@ argparser.add_argument("filename", metavar="PATH", type=str,
 
 
 def log_error(message):
-    print(f"<ERROR> {message}")
+    print(f"<H_ERROR> {message}")
 
 
 def main():
     args = argparser.parse_args()
     
-    parser = HitoriParser()
+    parser = hitori_parser.HitoriParser()
     try:
         board = parser.parse_board_from_file(args.filename)
-        # board = parser.parse_board_from_file(r"puzzles\1.txt")
     except FileNotFoundError as e:
         log_error(f"{e}: Could not locate the .txt file")
         return
 
-    solver = HitoriSolver()
+    solver = hitori_solver.HitoriSolver()
     try:
         solver.solve(board)
-    except HitoriNoSolutionError as e:
+    except hitori_solver.HitoriNoSolutionError as e:
         log_error(f"{e}: Could not find a solution to this puzzle")
+        print(board)
         return
 
     print("Here is a solution:")

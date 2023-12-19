@@ -1,12 +1,12 @@
-from hitori_board import HitoriBoard
+from hitori_solver.hitori_board import *
 
 
 class HitoriParser:
     def parse_board_from_file(self, filename: str) -> HitoriBoard:
         with open(filename) as f:
-            size = int(f.readline().strip())
+            width, height = map(int, f.readline().strip().split())
             numbers = []
-            for _ in range(size):
+            for _ in range(height):
                 row = map(int, f.readline().strip().split())
                 numbers.extend(row)
-            return HitoriBoard(size, numbers)
+            return HitoriBoard(width, height, numbers)
