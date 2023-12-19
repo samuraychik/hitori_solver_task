@@ -1,13 +1,13 @@
 import numpy as np
 from collections import deque
 
-from hitori_solver.hitori_cell import CellState, HitoriCell
+from hitori.hitori_cell import CellState, HitoriCell
 
 
 class HitoriBoard:
     def __init__(self, width, height, numbers) -> None:
         if len(numbers) != width * height:
-            raise Exception("Init HitoryBoard: Incorrect input")
+            raise ValueError()
 
         self.width = width
         self.height = height

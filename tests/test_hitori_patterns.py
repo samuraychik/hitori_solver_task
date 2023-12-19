@@ -5,7 +5,7 @@ import unittest
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                              os.path.pardir))
 
-from hitori_solver import hitori_patterns as hp
+from hitori import hitori_patterns as hp
 
 
 class HitoriBoardTestCase(unittest.TestCase):

@@ -1,4 +1,4 @@
-from hitori_solver.hitori_board import *
+from hitori.hitori_board import *
 
 
 class HitoriParser:

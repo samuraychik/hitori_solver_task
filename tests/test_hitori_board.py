@@ -5,7 +5,7 @@ import unittest
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                              os.path.pardir))
 
-from hitori_solver import hitori_board as hb
+from hitori import hitori_board as hb
 
 
 class HitoriBoardTestCase(unittest.TestCase):

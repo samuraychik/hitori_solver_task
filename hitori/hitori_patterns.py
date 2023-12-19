@@ -1,5 +1,5 @@
-from hitori_solver.hitori_board import *
-from hitori_solver.hitori_commands import *
+from hitori.hitori_board import *
+from hitori.hitori_commands import *
 
 
 class HitoriPatternsResolver:
