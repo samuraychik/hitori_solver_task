@@ -4,11 +4,11 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                              os.path.pardir))
 
-from commands.vitvit_commands import *
-from hitori.hitori_board import *
-from hitori.hitori_cell import *
-from hitori.hitori_commands import *
-from hitori.hitori_patterns import *
+from commands.vitvit_commands import CommandManager
+from hitori.hitori_board import HitoriBoard
+from hitori.hitori_cell import CellState
+from hitori.hitori_commands import SetBlack, SetWhite, HitoriWrongCommandError
+from hitori.hitori_patterns import HitoriPatternsResolver
 
 
 class HitoriNoSolutionError(Exception):
@@ -67,7 +67,7 @@ class HitoriSolver:
             patterns_resolver.resolve_repeats()
             patterns_resolver.resolve_triple_corners()
             patterns_resolver.resolve_sandwiches()
-        except HitoriWrongSolutionError:
+        except HitoriWrongCommandError:
             raise HitoriImpossiblePatternError()
 
     def resolve_forced_cells(self, board: HitoriBoard):
@@ -115,7 +115,7 @@ class HitoriSolver:
 
             try:
                 manager.do(SetBlack(cell, board))
-            except HitoriWrongSolutionError:
+            except HitoriWrongCommandError:
                 can_be_black = False
             else:
                 can_be_black = True
@@ -123,7 +123,7 @@ class HitoriSolver:
 
             try:
                 manager.do(SetWhite(cell, board))
-            except HitoriWrongSolutionError:
+            except HitoriWrongCommandError:
                 can_be_white = False
             else:
                 can_be_white = True
@@ -150,7 +150,7 @@ class HitoriSolver:
             can_be_black = True
             try:
                 manager.do(SetBlack(cell, board))
-            except HitoriWrongSolutionError:
+            except HitoriWrongCommandError:
                 can_be_black = False
             else:
                 try:
@@ -166,7 +166,7 @@ class HitoriSolver:
             can_be_white = True
             try:
                 manager.do(SetWhite(cell, board))
-            except HitoriWrongSolutionError:
+            except HitoriWrongCommandError:
                 can_be_white = False
             else:
                 try:

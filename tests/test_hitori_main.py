@@ -36,6 +36,17 @@ class HitoriMainTestCase(unittest.TestCase):
                 hm.main([file])
             self.assertEqual(e.exception.code, 0, f"Fail on {file}")
 
+    def test_enable_diagonal_rule_and_fail(self):
+        with self.assertRaises(SystemExit) as e:
+            hm.main(["tests/test_files/real_puzzles/easy_1.txt"])
+        self.assertEqual(e.exception.code, 0, "Should have solved with "
+                         "diagonal rule disabled")
+
+        with self.assertRaises(SystemExit) as e:
+            hm.main(["tests/test_files/real_puzzles/easy_1.txt", "-d"])
+        self.assertEqual(e.exception.code, 3, "Should not have solved with "
+                         "diagonal rule enabled")
+
 
 if __name__ == "__main__":
     unittest.main()

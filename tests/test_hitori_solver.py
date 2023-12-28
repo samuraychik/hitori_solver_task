@@ -48,7 +48,8 @@ class HitoriSolverTestCase(unittest.TestCase):
         self.assertEqual(ac, ex, f"\nExpected:\n{ex}\nActual:\n{ac}")
 
     def test_is_solved(self):
-        board = hs.HitoriBoard(2, 2, [1, 2, 2, 2])
+        board = hs.HitoriBoard(2, 2, [1, 2,
+                                      2, 2])
         solved_before = self.solver.is_solved(board)
         board._board[1, 1].state = hs.CellState.BLACK
         solved_after = self.solver.is_solved(board)
@@ -56,19 +57,28 @@ class HitoriSolverTestCase(unittest.TestCase):
         self.assertTrue(solved_after, "Doesn't state solved when should")
 
     def test_solve_solvable(self):
-        board = hs.HitoriBoard(5, 5,
-                               [5, 5, 3, 1, 1,
-                                4, 2, 1, 5, 3,
-                                2, 5, 5, 1, 4,
-                                5, 3, 3, 4, 5,
-                                3, 5, 4, 1, 4])
+        board = hs.HitoriBoard(3, 3, [1, 2, 3,
+                                      2, 1, 1,
+                                      3, 1, 1])
+
         self.solver.solve(board)
-        ex = ". # . # . \n. . . . . \n. # . # . \n# . # . . \n. . . . # \n"
+        ex = ". . . \n. # . \n. . # \n"
         ac = board.to_string_with_symbols()
         self.assertEqual(ac, ex, f"\nExpected:\n{ex}\nActual:\n{ac}")
 
     def test_fail_solve_unsolvable(self):
-        board = hs.HitoriBoard(2, 2, [1, 1, 1, 1])
+        board = hs.HitoriBoard(2, 2, [1, 1,
+                                      1, 1])
+        with self.assertRaises(hs.HitoriNoSolutionError):
+            self.solver.solve(board)
+
+    def test_fail_solve_unsolvable_with_diagonal_rule_only(self):
+        board = hs.HitoriBoard(3, 3, [1, 2, 3,
+                                      2, 1, 1,
+                                      3, 1, 1], True)
+        # this board is solvable without diagonal rule 
+        # see: test_solve_solvable
+
         with self.assertRaises(hs.HitoriNoSolutionError):
             self.solver.solve(board)
 

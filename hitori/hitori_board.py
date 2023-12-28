@@ -5,7 +5,11 @@ from hitori.hitori_cell import CellState, HitoriCell
 
 
 class HitoriBoard:
-    def __init__(self, width, height, numbers) -> None:
+    def __init__(self, 
+                 width: int, height: int, 
+                 numbers: list,
+                 diagonal_rule_enabled=False) -> None:
+
         if len(numbers) != width * height:
             raise ValueError()
 
@@ -21,6 +25,7 @@ class HitoriBoard:
                     cells.append(HitoriCell(x, y, numbers[i]))
                     i += 1
 
+        self.diagonal_rule_enabled = diagonal_rule_enabled
         self._board = np.array(cells).reshape(height, width)
 
     def get_row(self, number):
@@ -56,25 +61,16 @@ class HitoriBoard:
     def get_adjacent_from_cell(self, cell: HitoriCell) -> list:
         return self.get_adjacent(cell.x, cell.y)
 
-    def get_both_diagonal_cells(self, cell):
+    def get_diagonals_from_cell(self, cell: HitoriCell) -> list:
         cells = []
 
-        x1 = 0 - cell.x
-        y1 = 0 - cell.y
-        x2 = self.width - 1 - cell.x
-        y2 = 0 - cell.y
-
-        while (cell.x + x1 < self.width) and (cell.y + y1 < self.height):
-            if x1:
-                cells.append(self.get_cell(cell.x + x1, cell.y + y1))
-            x1 += 1
-            y1 += 1
-
-        while (cell.x + x2 >= 0) and (cell.y + y2 < self.height):
-            if x2:
-                cells.append(self.get_cell(cell.x + x2, cell.y + y2))
-            x2 -= 1
-            y2 += 1
+        for delta in range(0 - cell.x, self.width - cell.x):
+            if delta == 0:
+                continue
+            if -1 < cell.y + delta < self.height:
+                cells.append(self.get_cell(cell.x + delta, cell.y + delta))
+            if -1 < cell.y - delta < self.height:
+                cells.append(self.get_cell(cell.x + delta, cell.y - delta))
 
         return cells
 
@@ -101,8 +97,9 @@ class HitoriBoard:
         row_repeats = self.get_row_repeats(x, y)
         return col_repeats + row_repeats
 
-    def get_diagonal_repeats_from_cell(self, cell):
-        return [repeat for repeat in self.get_both_diagonal_cells(cell) if repeat.value == cell.value]
+    def get_diagonal_repeats_from_cell(self, cell) -> list:
+        return [c for c in self.get_diagonals_from_cell(cell)
+                if c.value == cell.value]
 
     def get_repeats_from_cell(self, cell: HitoriCell) -> list:
         return self.get_repeats(cell.x, cell.y)

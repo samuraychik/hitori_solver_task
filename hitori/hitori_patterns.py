@@ -1,5 +1,5 @@
-from hitori.hitori_board import *
-from hitori.hitori_commands import *
+from hitori.hitori_board import HitoriBoard
+from hitori.hitori_commands import SetBlack, SetWhite
 
 
 class HitoriPatternsResolver:

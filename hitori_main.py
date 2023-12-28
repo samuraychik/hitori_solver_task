@@ -11,6 +11,10 @@ argparser = argparse.ArgumentParser(
 argparser.add_argument("filename", metavar="PATH", type=str,
                        help="path to your Hitori puzzle, in .txt format")
 
+argparser.add_argument("-d", "--diagonal", action="store_true",
+                       help="enables the additional diagonal rule "
+                       "(no black diagonal repeats)")
+
 
 def log_error(message):
     print(f"<H_ERROR> {message}")
@@ -22,6 +26,7 @@ def main(argv=None):
     parser = hitori_parser.HitoriParser()
     try:
         board = parser.parse_board_from_file(args.filename)
+        board.diagonal_rule_enabled = args.diagonal
     except FileNotFoundError as e:
         log_error(f"{e}: Could not locate the .txt file")
         sys.exit(1)
