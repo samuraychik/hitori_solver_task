@@ -56,6 +56,28 @@ class HitoriBoard:
     def get_adjacent_from_cell(self, cell: HitoriCell) -> list:
         return self.get_adjacent(cell.x, cell.y)
 
+    def get_both_diagonal_cells(self, cell):
+        cells = []
+
+        x1 = 0 - cell.x
+        y1 = 0 - cell.y
+        x2 = self.width - 1 - cell.x
+        y2 = 0 - cell.y
+
+        while (cell.x + x1 < self.width) and (cell.y + y1 < self.height):
+            if x1:
+                cells.append(self.get_cell(cell.x + x1, cell.y + y1))
+            x1 += 1
+            y1 += 1
+
+        while (cell.x + x2 >= 0) and (cell.y + y2 < self.height):
+            if x2:
+                cells.append(self.get_cell(cell.x + x2, cell.y + y2))
+            x2 -= 1
+            y2 += 1
+
+        return cells
+
     def get_col_repeats(self, x, y) -> list:
         col = self.get_col(x)
         origin_cell = self.get_cell(x, y)
@@ -78,6 +100,9 @@ class HitoriBoard:
         col_repeats = self.get_col_repeats(x, y)
         row_repeats = self.get_row_repeats(x, y)
         return col_repeats + row_repeats
+
+    def get_diagonal_repeats_from_cell(self, cell):
+        return [repeat for repeat in self.get_both_diagonal_cells(cell) if repeat.value == cell.value]
 
     def get_repeats_from_cell(self, cell: HitoriCell) -> list:
         return self.get_repeats(cell.x, cell.y)

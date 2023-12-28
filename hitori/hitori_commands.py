@@ -60,6 +60,11 @@ class SetBlack(Command):
             if adjacent.state != CellState.WHITE:
                 self.manager.do(SetWhite(adjacent, self.board))
 
+        diagonal_repeats = self.board.get_diagonal_repeats_from_cell(self.cell)
+        for repeat in diagonal_repeats:
+            if repeat.state != CellState.WHITE:
+                self.manager.do(SetWhite(repeat, self.board))
+
     def undo(self):
         self.cell.state = CellState.GREY
         while len(self.manager.history) > 0:
