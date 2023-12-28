@@ -61,6 +61,13 @@ class HitoriBoard:
     def get_adjacent_from_cell(self, cell: HitoriCell) -> list:
         return self.get_adjacent(cell.x, cell.y)
 
+    def get_cardinals_from_cell(self, cell: HitoriCell) -> list:
+        row = [c for c in self.get_row(cell.y)]
+        row.remove(cell)
+        col = [c for c in self.get_col(cell.x)]
+        col.remove(cell)
+        return row + col
+
     def get_diagonals_from_cell(self, cell: HitoriCell) -> list:
         cells = []
 

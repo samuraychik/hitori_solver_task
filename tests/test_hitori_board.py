@@ -53,6 +53,15 @@ class HitoriBoardTestCase(unittest.TestCase):
         self.assertCountEqual(self.board.get_adjacent_from_cell(
             self.board._board[1, 1]), expected)
 
+    def test_get_cardinals(self):
+        self.board = hb.HitoriBoard(3, 3, [1, 2, 3,
+                                           4, 5, 6,
+                                           7, 8, 9])
+        expected = [self.board._board[0, 0], self.board._board[1, 1],
+                    self.board._board[1, 2], self.board._board[2, 0]]
+        self.assertCountEqual(self.board.get_cardinals_from_cell(
+            self.board._board[1, 0]), expected)
+
     def test_get_repeats(self):
         self.board = hb.HitoriBoard(3, 3, [1, 2, 3,
                                            1, 2, 1,
@@ -60,10 +69,10 @@ class HitoriBoardTestCase(unittest.TestCase):
         expected = [self.board._board[0, 0], self.board._board[1, 2]]
         self.assertCountEqual(self.board.get_repeats(0, 1), expected)
         self.assertCountEqual(self.board.get_repeats_from_cell(
-            self.board._board[0, 1]), expected)
+            self.board._board[1, 0]), expected)
 
     def test_get_diagonal_repeats(self):
-        self.board = hb.HitoriBoard(2, 2, [1, 2, 3,
+        self.board = hb.HitoriBoard(3, 3, [1, 2, 3,
                                            2, 1, 1,
                                            3, 1, 1])
         excepted = [self.board._board[0, 0], self.board._board[2, 2]]

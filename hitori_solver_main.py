@@ -1,8 +1,8 @@
 import argparse
 import sys
 
-from hitori import hitori_parser
-from hitori import hitori_solver
+from hitori import hitori_parser as hp
+from hitori import hitori_solver as hs
 
 
 argparser = argparse.ArgumentParser(
@@ -17,28 +17,28 @@ argparser.add_argument("-d", "--diagonal", action="store_true",
 
 
 def log_error(message):
-    print(f"<H_ERROR> {message}")
+    print(f"<HS_ERROR> {message}")
 
 
 def main(argv=None):
     args = argparser.parse_args(argv)
 
-    parser = hitori_parser.HitoriParser()
+    parser = hp.HitoriParser()
     try:
         board = parser.parse_board_from_file(args.filename)
         board.diagonal_rule_enabled = args.diagonal
     except FileNotFoundError as e:
-        log_error(f"{e}: Could not locate the .txt file")
+        log_error(f"Could not locate the .txt file at \"{args.filename}\"")
         sys.exit(1)
     except ValueError as e:
-        log_error(f"{e}: Invalid .txt file provided")
+        log_error(f"Invalid .txt file provided")
         sys.exit(2)
 
-    solver = hitori_solver.HitoriSolver()
+    solver = hs.HitoriSolver()
     try:
         solver.solve(board)
-    except hitori_solver.HitoriNoSolutionError as e:
-        log_error(f"{e}: Could not find a solution to this puzzle")
+    except hs.HitoriNoSolutionError as e:
+        log_error(f"Could not find a solution to this puzzle")
         sys.exit(3)
 
     print("Here is a solution:")

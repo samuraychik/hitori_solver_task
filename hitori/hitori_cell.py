@@ -8,7 +8,7 @@ class CellState(Enum):
 
 
 class HitoriCell:
-    def __init__(self, x, y, value) -> None:
+    def __init__(self, x: int, y: int, value) -> None:
         self.x = x
         self.y = y
         self.value = value

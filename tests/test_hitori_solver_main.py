@@ -6,7 +6,7 @@ import unittest
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
                              os.path.pardir))
 
-import hitori_main as hm
+import hitori_solver_main as hm
 
 
 class HitoriMainTestCase(unittest.TestCase):
