@@ -10,10 +10,10 @@ argparser = argparse.ArgumentParser(
 
 argparser.add_argument("path", metavar="PATH", type=str,
                        help="generated file path")
-argparser.add_argument("width", metavar="W", type=int,
+argparser.add_argument("-x", "--width", metavar="X", type=int,
                        help="puzzle width (must be positive)",
                        default=5)
-argparser.add_argument("height", metavar="H", type=int,
+argparser.add_argument("-y", "--height", metavar="Y", type=int,
                        help="puzzle height (must be positive)",
                        default=5)
 argparser.add_argument("-d", "--diagonal", action="store_true",
@@ -28,12 +28,12 @@ def log_error(message):
 def main(argv=None):
     args = argparser.parse_args(argv)
 
-    if args.width < 0:
+    if args.width <= 0:
         log_error(f"Invalid width {args.width} (must be positive)")
-        sys.exit(1)
-    if args.height < 0:
+        sys.exit(2)
+    if args.height <= 0:
         log_error(f"Invalid height {args.height} (must be positive)")
-        sys.exit(1)
+        sys.exit(2)
 
     geneartor = hg.HitoriGenerator()
     generated = False
@@ -41,7 +41,7 @@ def main(argv=None):
     while not generated:
         if fails > 42:
             log_error("Failed to generate a puzzle :(")
-            sys.exit(2)
+            sys.exit(3)
         try:
             board = geneartor.generate(args.width, args.height, args.diagonal)
         except hg.HitoriRetryGenerationError:
@@ -54,7 +54,7 @@ def main(argv=None):
         parser.parse_file_from_board(args.path, board)
     except FileNotFoundError:
         log_error(f"Couldn't reach the path \"{args.path}\"")
-        sys.exit(3)
+        sys.exit(1)
 
     print(f"Board generated at \"{args.path}\" successfully!")
     print(board)

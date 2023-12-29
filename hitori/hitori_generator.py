@@ -25,17 +25,12 @@ class HitoriGenerator:
 
         try:
             self.fill_white_with_numbers(board)
+            if diagonal_rule_enabled:
+                self.fill_black_with_numbers_with_rule(board)
+            else:
+                self.fill_black_with_numbers(board)
         except HitoriNumberGenerationFailedError:
             raise HitoriRetryGenerationError()
-
-        if diagonal_rule_enabled:
-            try:
-                self.fill_black_with_numbers_with_rule(board)
-            except HitoriNumberGenerationFailedError:
-                raise HitoriRetryGenerationError()
-
-        else:
-            self.fill_black_with_numbers(board)
 
         self.grey_out(board)
         return board
@@ -62,6 +57,7 @@ class HitoriGenerator:
         for tuple in optimized_cardinals:
             cell = tuple[0]
             cell_cardinals = tuple[1]
+
             if len(cell.value) == 0:
                 raise HitoriNumberGenerationFailedError()
 
@@ -83,6 +79,10 @@ class HitoriGenerator:
                 whites = [c for c
                           in board.get_col(cell.x)
                           if c.state == CellState.WHITE]
+
+            if len(whites) == 0:
+                raise HitoriNumberGenerationFailedError()
+
             cell.value = whites[randint(0, len(whites) - 1)].value
 
     def fill_black_with_numbers_with_rule(self, board: HitoriBoard) -> None:
@@ -91,6 +91,7 @@ class HitoriGenerator:
         for tuple in optimized_diagonals:
             cell = tuple[0]
             cell_diagonals = tuple[1]
+
             if len(cell.value) == 0:
                 raise HitoriNumberGenerationFailedError()
 
