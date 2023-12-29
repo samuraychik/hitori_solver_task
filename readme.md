@@ -1,18 +1,36 @@
-# Hitori Solver
+# Hitori
 
-v 1.0
+v 1.1
 
 **Авторы:** Анастасия Городничая, Виталий Карпов
 
 ## Описание:
 
-Данное приложение способно решать головоломки "Hitori" разных форм, размеров и сложностей.
+Составной проект по головоломке "Hitori", включающий в себя решатель и генератор головоломок
 
-## Запуск:
+## Состав:
 
-Справка по запуску: ```python hitori_main.py -h```
+* Решатель головоломок "Hitori": ```hitori_solver_main.py```
+* Генератор головоломок "Hitori": ```hitori_generator_main.py_```
+* Модули логики Hitori: ```hitori/```
+* Модули Command: ```command/``` *(реализация паттерна "Команда")*
+* Тесты: ```tests/```
+* Набор реальных головоломок разных уровней сложности: ```tests/test_files/real_puzzles```
 
-Пример запуска: ```python hitori_main.py C:\...\example.txt```
+## Требования:
+
+* Python версии не ниже 3.10
+* Numpy версии не ниже 1.26.2
+
+<br/>
+
+# Hitori Solver
+
+### Запуск:
+
+Справка по запуску: ```python hitori_solver_main.py -h```
+
+Пример запуска: ```python hitori_solver_main.py C:\...\example.txt```
 
 ### Формат входных данных:
 
@@ -25,15 +43,12 @@ v 1.0
 ```2 3 4 1```  
 ```3 4 1 2```  
 
-## Требования:
+<br/>
 
-* Python версии не ниже 3.10
-* Numpy версии не ниже 1.26.2
+# Hitori Generator
 
-## Состав:
+### Запуск:
 
-* Файл запуска: ```hitori_main.py```
-* Модули Hitori: ```hitori/```
-* Модули Command: ```command/``` *(реализация паттерна "Команда")*
-* Тесты: ```tests/```
-* Набор реальных головоломок разных уровней сложности: ```tests/test_files/real_puzzles```
+Справка по запуску: ```python hitori_generator_main.py -h```
+
+Пример запуска: ```python hitori_generator_main.py C:\...\example.txt -x 5 -y 5```
