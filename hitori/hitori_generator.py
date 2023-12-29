@@ -15,11 +15,11 @@ class HitoriRetryGenerationError(Exception):
 
 
 class HitoriGenerator:
-    def generate(self, width: int, height: int, 
+    def generate(self, width: int, height: int,
                  diagonal_rule_enabled=False) -> HitoriBoard:
         numbers = [i for i in range(width * height)]
         board = HitoriBoard(width, height, numbers,
-                                 diagonal_rule_enabled)
+                            diagonal_rule_enabled)
 
         self.color_board_cells(board)
 
@@ -72,8 +72,8 @@ class HitoriGenerator:
         for cell in board.get_cells_of_color(CellState.BLACK):
             use_row = randint(1, 100) <= 50
             if use_row:
-                whites = [c for c 
-                          in board.get_row(cell.y) 
+                whites = [c for c
+                          in board.get_row(cell.y)
                           if c.state == CellState.WHITE]
             else:
                 whites = [c for c
@@ -113,7 +113,7 @@ class HitoriGenerator:
                                      if c.state == CellState.WHITE]
 
         return sorted(white_cardinals.items(),
-                      key=lambda t:len(t[1]), reverse=True)
+                      key=lambda t: len(t[1]), reverse=True)
 
     def get_optimized_black_diagonals(self, board: HitoriBoard) -> list():
         black_diagonals = dict()
@@ -131,7 +131,7 @@ class HitoriGenerator:
                                      if c.state == CellState.BLACK]
 
         return sorted(black_diagonals.items(),
-                      key=lambda t:len(t[1]), reverse=True)
+                      key=lambda t: len(t[1]), reverse=True)
 
     def grey_out(self, board: HitoriBoard) -> None:
         for cell in board.get_cells_list():

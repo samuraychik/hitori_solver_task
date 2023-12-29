@@ -76,7 +76,7 @@ class HitoriSolverTestCase(unittest.TestCase):
         board = hs.HitoriBoard(3, 3, [1, 2, 3,
                                       2, 1, 1,
                                       3, 1, 1], True)
-        # this board is solvable without diagonal rule 
+        # this board is solvable without diagonal rule
         # see: test_solve_solvable
 
         with self.assertRaises(hs.HitoriNoSolutionError):
