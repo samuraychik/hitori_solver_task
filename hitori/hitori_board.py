@@ -5,8 +5,8 @@ from hitori.hitori_cell import CellState, HitoriCell
 
 
 class HitoriBoard:
-    def __init__(self, 
-                 width: int, height: int, 
+    def __init__(self,
+                 width: int, height: int,
                  numbers: list,
                  diagonal_rule_enabled=False) -> None:
 
